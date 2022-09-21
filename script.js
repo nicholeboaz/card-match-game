@@ -34,13 +34,26 @@ class Deck {
 const cardContainers = document.getElementsByClassName('card-container');
 const cardOverlays = document.getElementsByClassName('card-overlay');
 
-const groupsFoundEl = document.getElementById('groups-found');
+const matchesFoundEl = document.getElementById('matches-found');
 const remainingCardsEl = document.getElementById('remaining-cards');
 const modalEl = document.getElementById('modal');
 const modalTextEl = document.getElementById('modal-text');
 
 const modalCloseBtn = document.getElementById('modal-close-btn');
-const checkGroupsBtn = document.getElementById('check-groups-btn');
+const checkMatchesBtn = document.getElementById('check-matches-btn');
+
+const shapes = {
+    solid: {
+        circle: `<i class="fa-solid fa-circle"></i>`,
+        heart: `<i class="fa-solid fa-heart"></i>`,
+        star: `<i class="fa-solid fa-star"></i>`
+    },
+    regular: {
+        circle: `<i class="fa-regular fa-circle"></i>`,
+        heart: `<i class="fa-regular fa-heart"></i>`,
+        star: `<i class="fa-regular fa-star"></i>`
+    }
+}
 
 /* --- MAKE DECK --- */ 
 
@@ -61,22 +74,9 @@ function shuffle(deck)
 
 const shuffledDeck = shuffle(myDeck);
 
-const displayCards = [];
-
-const shapes = {
-    solid: {
-        circle: `<i class="fa-solid fa-circle"></i>`,
-        heart: `<i class="fa-solid fa-heart"></i>`,
-        star: `<i class="fa-solid fa-star"></i>`
-    },
-    regular: {
-        circle: `<i class="fa-regular fa-circle"></i>`,
-        heart: `<i class="fa-regular fa-heart"></i>`,
-        star: `<i class="fa-regular fa-star"></i>`
-    }
-}
-
 /* --- RENDER CARDS --- */
+
+const displayCards = [];
 
 function renderCards() {
     while (displayCards.length < 12) {
@@ -124,79 +124,50 @@ renderCards();
 
 /* --- FUNCTIONS --- */ 
 
-function checkGroup([card1, card2, card3]) {
-    let numberSet = false;
-    let colorSet = false;
-    let shapeSet = false;
-    let shadingSet = false;
 
-    if (card1.number !== card2.number 
-        && card1.number !== card3.number 
-        && card2.number !== card3.number) {
-        numberSet = true;
-    } else if (card1.number === card2.number
-        && card1.number === card3.number 
-        && card2.number === card3.number) {
-        numberSet = true;
+function checkMatch([card1, card2, card3]) {
+    function check(card1, card2, card3, key) {
+        if (card1[key] !== card2[key] 
+            && card1[key] !== card3[key] 
+            && card2[key] !== card3[key]) {
+            return true;
+        } else if (card1[key] === card2[key]
+            && card1[key] === card3[key] 
+            && card2[key] === card3[key]) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    if (card1.color !== card2.color 
-        && card1.color !== card3.color 
-        && card2.color !== card3.color) {
-        colorSet = true;
-    } else if (card1.color === card2.color
-        && card1.color === card3.color 
-        && card2.color === card3.color) {
-        colorSet = true;
-    }
-
-    if (card1.shape !== card2.shape 
-        && card1.shape !== card3.shape 
-        && card2.shape !== card3.shape) {
-        shapeSet = true;
-    } else if (card1.shape === card2.shape
-        && card1.shape === card3.shape 
-        && card2.shape === card3.shape) {
-        shapeSet = true;
-    }
-
-    if (card1.shading !== card2.shading 
-        && card1.shading !== card3.shading 
-        && card2.shading !== card3.shading) {
-        shadingSet = true;
-    } else if (card1.shading === card2.shading
-        && card1.shading === card3.shading 
-        && card2.shading === card3.shading) {
-        shadingSet = true;
-    }
-
-    if (numberSet === true && colorSet === true && shapeSet === true && shadingSet === true) {
-        return true;
-    } else {
-        return false;
-    }
+    return (
+        check(card1, card2, card3, "number") &&
+        check(card1, card2, card3, "color") &&
+        check(card1, card2, card3, "shape") &&
+        check(card1, card2, card3, "shading")
+    )
 }
 
-function checkForGroups(cards) {
-    let groupCount = 0;
+function checkForMatches(cards) {
+    let matchCount = 0;
     for (let card of cards) {
         for (let i = cards.indexOf(card); i < (cards.length - 2); i++) {
             for (let j = i + 1; j < (cards.length - 1); j++) {
                 let arr = [card, cards[i+1], cards[j+1]];
-                if (checkGroup(arr)) {
-                    groupCount++;
-                    // console.log(arr);
+                if (checkMatch(arr)) {
+                    matchCount++;
+                    console.log(arr);
                 }
             }
         }
     }
-    return groupCount; 
+    return matchCount; 
 }
 
 /* --- EVENT LISTENER -- */
 
 let selectedCards = 0;
-let selectedGroup = [];
+let selectedMatch = [];
 
 // click on card
 
@@ -209,23 +180,23 @@ for (let cardOverlay of cardOverlays) {
         let currentCard = displayCards[position];
         if (cardOverlay.classList.contains('card-selected')) {
             cardOverlay.classList.toggle('card-selected');
-            for (let card of selectedGroup) {
+            for (let card of selectedMatch) {
                 if (card === currentCard) {
-                    selectedGroup.splice(selectedGroup.indexOf(card), 1);
+                    selectedMatch.splice(selectedMatch.indexOf(card), 1);
                 }
             }
             selectedCards--;
         } else {
             if (selectedCards < 3) {
                 cardOverlay.classList.toggle('card-selected');
-                selectedGroup.push(displayCards[position]);
+                selectedMatch.push(displayCards[position]);
                 selectedCards++;
                 if (selectedCards === 3) {
-                    if (checkGroup(selectedGroup)) {
-                        const modalText = `You found a valid group! Congratulations!`;
+                    if (checkMatch(selectedMatch)) {
+                        const modalText = `You found a valid match! Congratulations!`;
                         displayModal(modalText);
                     } else {
-                        const modalText = `Sorry, that isn't a valid group.`;
+                        const modalText = `Sorry, that isn't a valid match.`;
                         displayModal(modalText);
                     }
                 }
@@ -241,17 +212,17 @@ function displayModal(text) {
     modalTextEl.textContent = text;
 }
 
-checkGroupsBtn.addEventListener('click', () => {
-    const modalText = checkForGroups(displayCards) === 1 
-    ? `There is currently ${checkForGroups(displayCards)} valid group.` 
-    : `There are currently ${checkForGroups(displayCards)} valid groups.`;
+checkMatchesBtn.addEventListener('click', () => {
+    const modalText = checkForMatches(displayCards) === 1 
+    ? `There is currently ${checkForMatches(displayCards)} valid match.` 
+    : `There are currently ${checkForMatches(displayCards)} valid matches.`;
     displayModal(modalText);
 })
 
 modalCloseBtn.addEventListener('click', () => {
     modalEl.classList.add('hidden');
     selectedCards = 0;
-    selectedGroup = [];
+    selectedMatch = [];
     for (let cardOverlay of cardOverlays) {
         cardOverlay.classList.remove('card-selected');
     }
