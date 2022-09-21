@@ -79,21 +79,22 @@ const shapes = {
 /* --- RENDER CARDS --- */
 
 function renderCards() {
-    for (let cardContainer of cardContainers) {
-        let newCard = shuffledDeck.shift();
-        let shape = `<span class="card-shape ${newCard.color} ${newCard.shading}">${shapes.solid[newCard.shape]}</span>`;
-        let shapeOverlay = `<span class="card-shape ${newCard.color}">${shapes.regular[newCard.shape]}</span>`
-    
-        if (newCard.number === 1) {
-            cardContainer.innerHTML = 
+    while (displayCards.length < 12) {
+        displayCards.push(shuffledDeck.shift());
+    }
+    for (let i = 0; i < displayCards.length; i++) {
+        let shape = `<span class="card-shape ${displayCards[i].color} ${displayCards[i].shading}">${shapes.solid[displayCards[i].shape]}</span>`;
+        let shapeOverlay = `<span class="card-shape ${displayCards[i].color}">${shapes.regular[displayCards[i].shape]}</span>`
+        if (displayCards[i].number === 1) {
+            cardContainers[i].innerHTML = 
                 `<div class="card">
                     ${shape}
                 </div>
                 <div class="card-overlay">
                     ${shapeOverlay}
                 </div>`
-        } else if (newCard.number === 2) {
-            cardContainer.innerHTML = 
+        } else if (displayCards[i].number === 2) {
+            cardContainers[i].innerHTML = 
                 `<div class="card">
                     ${shape}
                     ${shape}
@@ -103,7 +104,7 @@ function renderCards() {
                     ${shapeOverlay}
                 </div>`
         } else {
-            cardContainer.innerHTML = 
+            cardContainers[i].innerHTML = 
                 `<div class="card">
                     ${shape}
                     ${shape}
@@ -115,7 +116,6 @@ function renderCards() {
                     ${shapeOverlay}
                 </div>`
         }
-        displayCards.push(newCard);
     }
     console.log(shuffledDeck.length)
 }
