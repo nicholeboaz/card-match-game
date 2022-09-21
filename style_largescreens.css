@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ---------
+Typography
+--------- */
+
+h1, h2 {
+    font-family: 'Righteous', cursive;
+    margin: 0;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+/* ---------
+Layout
+--------- */
+
+header {
+    padding: 1em;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    width: 25%;
+    height: 200px;
+    padding: 20px 0;
+}
+
+/* ---------
+Cards
+--------- */
+
+
+/* card size ratio: width / height === 0.6429 */
+
+.card,
+.card-overlay {
+    /* --- SIZING --- */
+    width: 130px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 0.5em 0;
+    font-size: 2rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    /* --- FLEX --- */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.card {
+    border: 2px solid black;
+}
+
+.card-overlay {
+    position: relative;
+    transform: translateY(-200px);
+}
+
+.card-overlay:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px #999999;
+}
+
+.card-selected {
+    box-shadow: 0 0 8px #FF6666;
+}
+
+.card-selected:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px #660000;
+}
+
+/* ---------
+Card shapes
+--------- */
+
+.card-shape {
+    display: flex;
+    flex-direction: column;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.empty {
+    opacity: 0;
+}
+
+.transparent {
+    opacity: .2;
+}
+
+.solid {
+    opacity: 1;
+}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ebee435675.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>[title]</h1>
+            <h2>A Game of Visual Logic</h2>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="cards-container">
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+                <div class="card-container"> <!-- card goes here --> </div>
+            </div> <!-- cards-container end -->
+            <div class="game-status">
+                <p>Groups found: <span id="groups-found">0</span></p>
+                <p>Cards remaining: <span id="remaining-cards">69</span></p>
+                <button id="check-groups-btn">Check for groups</button>
+            </div>
+        </div>
+    <div id="modal" class="hidden">
+        <div id="modal-content">
+            <p id="modal-text"></p>
+            <button id="modal-close-btn">Close</button>
+        </div>
+    </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
+

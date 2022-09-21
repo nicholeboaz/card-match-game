@@ -1,0 +1,214 @@
+* {
+    --card-width: 70px;
+    --card-height: 110px;
+    --shape-size: 1.25rem;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ---------
+Typography
+--------- */
+
+h1, h2 {
+    font-family: 'Righteous', cursive;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.25rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+button {
+    background: #333333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1em 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+p {
+    margin-top: 0;
+}
+
+.game-status p {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* ---------
+Layout
+--------- */
+
+header {
+    padding: 1em 0;
+    text-align: center;
+}
+
+.container {
+    width: 90vw;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 0.5em;
+}
+
+.card-container {
+    width: 25%;
+    height: var(--card-height);
+    padding: 0.5em 0;
+}
+
+.game-status {
+    width: 100%;
+    max-width: 400px;
+    margin: 2em auto 0 auto;
+    border-radius: 10px;
+    padding: 1em;
+    box-sizing: border-box;
+    background: #cceeff;
+    text-align: center;
+}
+
+/* ---------
+Modal
+--------- */
+
+#modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#modal-content {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 400px;
+    margin: 35vh auto 0 auto;
+    padding: 1.5em 0;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ---------
+Cards
+--------- */
+
+/* card size ratio: width / height === 0.6429 */
+
+.card,
+.card-overlay {
+    /* --- SIZING --- */
+    width: var(--card-width);
+    height: var(--card-height);
+    margin: 0 auto;
+    padding: 0.5em 0;
+    /* --- APPEARANCE --- */
+    font-size: var(--shape-size);
+    box-sizing: border-box;
+    border-radius: 10px;
+    /* --- FLEX --- */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.card {
+    border: 2px solid black;
+    background: white;
+}
+
+.card-overlay {
+    position: relative;
+    transform: translateY(calc(-1 * var(--card-height)));
+}
+
+.card-overlay:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px #999999;
+}
+
+.card-selected {
+    box-shadow: 0 0 8px #FF6666;
+}
+
+.card-selected:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px #660000;
+}
+
+/* ---------
+Card shapes
+--------- */
+
+.card-shape {
+    display: flex;
+    flex-direction: column;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.empty {
+    opacity: 0;
+}
+
+.transparent {
+    opacity: .2;
+}
+
+.solid {
+    opacity: 1;
+}
+
+@media screen and (min-width: 800px) {
+    * {
+        --card-width: 130px;
+        --card-height: 200px;
+        --shape-size: 2rem;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+}
